@@ -1,0 +1,44 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    username: test
+    password: test
+    url: jdbc:mysql://localhost/stock?useSSL=false&useUnicode=true&characterEncoding=UTF8&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    tomcat:
+      initSQL: SET NAMES utf8mb4 COLLATE utf8mb4_general_ci
+  flyway:
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+  messages:
+    basename: i18n/messages
+    cache-second: 1
+    encoding: UTF-8
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.ruiruisun.stock.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#showSql
+logging:
+  level:
+    com.ruiruisun.stock.mapper: DEBUG
+    org.springframework.jdbc.core.JdbcTemplate: DEBUG
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count==countSql
+  page-size-zero: true
+
+authorization:
+  secret: test1
+
+pagination:
+  pageSize: 1
