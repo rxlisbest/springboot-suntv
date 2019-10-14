@@ -19,14 +19,14 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
-  type-aliases-package: com.ruiruisun.stock.entity
+  type-aliases-package: net.ruixinglong.suntv.entity
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 #showSql
 logging:
   level:
-    com.ruiruisun.stock.mapper: DEBUG
+    net.ruixinglong.suntv.mapper: DEBUG
     org.springframework.jdbc.core.JdbcTemplate: DEBUG
 
 pagehelper:
