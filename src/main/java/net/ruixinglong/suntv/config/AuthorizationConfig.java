@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableWebMvc
 @Configuration
-public class WebAppConfig implements WebMvcConfigurer {
+public class AuthorizationConfig implements WebMvcConfigurer {
 
     @Bean
     AuthorizationInterceptor authorizationInterceptor() {
@@ -18,7 +18,7 @@ public class WebAppConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry){
-        registry.addInterceptor(authorizationInterceptor()).addPathPatterns("/**").excludePathPatterns("/login/index");
+        registry.addInterceptor(authorizationInterceptor()).addPathPatterns("/**").excludePathPatterns("/users/login");
         WebMvcConfigurer.super.addInterceptors(registry);
     }
 }

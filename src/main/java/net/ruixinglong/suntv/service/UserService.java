@@ -21,7 +21,7 @@ public class UserService {
 
     public int create(UserEntity user) {
         int rows = userMapper.create(user);
-        return rows;
+        return user.getId();
     }
 
     public int update(UserEntity user) {
