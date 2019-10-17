@@ -18,7 +18,10 @@ public class AuthorizationConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry){
-        registry.addInterceptor(authorizationInterceptor()).addPathPatterns("/**").excludePathPatterns("/users/login");
+        registry.addInterceptor(authorizationInterceptor())
+                .addPathPatterns("/**")
+                .excludePathPatterns("/users/login")
+                .excludePathPatterns("/captcha/123");
         WebMvcConfigurer.super.addInterceptors(registry);
     }
 }

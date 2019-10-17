@@ -1,33 +1,38 @@
 package net.ruixinglong.suntv.controller;
 
+import com.google.code.kaptcha.impl.DefaultKaptcha;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.util.concurrent.TimeUnit;
+import java.io.IOException;
 
 @ResponseBody
 @RestController
 @RequestMapping(value = "captcha")
 public class CaptchaController {
 
-    @RequestMapping("/login")
-    public void defaultKaptcha(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    @Autowired
+    DefaultKaptcha defaultKaptcha;
+
+    @RequestMapping("/123")
+    public void defaultKaptcha(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
         byte[] captchaChallengeAsJpeg = null;
         ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();
         try {
             //生产验证码字符串并保存到redis中
             String createText = defaultKaptcha.createText();
-            redisTemplate.opsForValue().set(authCodeKey,createText,AUTH_CODE_EXPIRE_SECONDS, TimeUnit.SECONDS);
-            String ss = redisTemplate.opsForValue().get(authCodeKey).toString();
             //使用生产的验证码字符串返回一个BufferedImage对象并转为byte写入到byte数组中
             BufferedImage challenge = defaultKaptcha.createImage(createText);
             ImageIO.write(challenge, "jpg", jpegOutputStream);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | IOException e) {
             httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
