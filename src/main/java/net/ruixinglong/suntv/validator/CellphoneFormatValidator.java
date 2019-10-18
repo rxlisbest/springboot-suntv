@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class CellphoneValidator implements ConstraintValidator<CellphoneFormat, String> {
+public class CellphoneFormatValidator implements ConstraintValidator<CellphoneFormat, String> {
 
     private boolean required = false;
 

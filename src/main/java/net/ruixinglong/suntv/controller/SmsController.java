@@ -9,12 +9,12 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
+import net.ruixinglong.suntv.bean.AliyunBean;
 import net.ruixinglong.suntv.bean.SendSmsBean;
 import net.ruixinglong.suntv.exception.BadRequestException;
 import net.ruixinglong.suntv.exception.InternalServerErrorException;
 import net.ruixinglong.suntv.utils.LocaleMessageUtils;
 import net.ruixinglong.suntv.utils.RedisUtils;
-import net.ruixinglong.suntv.utils.RegexUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +31,7 @@ public class SmsController {
     RedisUtils redisUtils;
 
     @Autowired
-    RegexUtils regexUtils;
+    AliyunBean aliyunBean;
 
     @PostMapping("/create")
     public String create(HttpSession session, @RequestBody @Valid SendSmsBean request, BindingResult bindingResult) throws Exception {
@@ -39,9 +39,6 @@ public class SmsController {
             throw new BadRequestException(LocaleMessageUtils.getMsg(bindingResult.getFieldError().getDefaultMessage()));
         }
 
-        if (!regexUtils.cellphone(request.getCellphone())) {
-            throw new BadRequestException(LocaleMessageUtils.getMsg("sms.create.bad_cellphone_format"));
-        }
         Object captchaObject = redisUtils.get(session.getId() + "_captcha");
         String captcha;
         if (captchaObject != null) {
@@ -53,7 +50,7 @@ public class SmsController {
             throw new BadRequestException(LocaleMessageUtils.getMsg("sms.create.bad_captcha"));
         }
 
-        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI4FrKXRqfyakYFdXbEc7M", "nAXjlAjShJ7cdhrOoBV4deQAXJvqjT");
+        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", aliyunBean.getAccessKeyId(), aliyunBean.getSecret());
         IAcsClient client = new DefaultAcsClient(profile);
 
         int code = (int) ((Math.random() * 9 + 1) * 100000);

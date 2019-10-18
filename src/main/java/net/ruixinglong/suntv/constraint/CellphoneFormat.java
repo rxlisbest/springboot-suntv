@@ -1,6 +1,6 @@
 package net.ruixinglong.suntv.constraint;
 
-import net.ruixinglong.suntv.validator.CellphoneValidator;
+import net.ruixinglong.suntv.validator.CellphoneFormatValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = CellphoneValidator.class)
+@Constraint(validatedBy = CellphoneFormatValidator.class)
 public @interface CellphoneFormat {
 
     //是否是必需字段，默认为true

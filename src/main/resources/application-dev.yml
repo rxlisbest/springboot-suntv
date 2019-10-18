@@ -47,5 +47,9 @@ pagehelper:
 authorization:
   secret: test1
 
+aliyun:
+  accessKeyId: LTAI4FrKXRqfyakYFdXbEc7M
+  secret: nAXjlAjShJ7cdhrOoBV4deQAXJvqjT
+
 pagination:
   pageSize: 1
