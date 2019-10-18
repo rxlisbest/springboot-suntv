@@ -1,21 +1,21 @@
 package net.ruixinglong.suntv.validator;
 
 import com.aliyuncs.utils.StringUtils;
-import net.ruixinglong.suntv.constraint.Cellphone;
+import net.ruixinglong.suntv.constraint.CellphoneFormat;
 import net.ruixinglong.suntv.utils.RegexUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class CellphoneValidator implements ConstraintValidator<Cellphone, String> {
+public class CellphoneValidator implements ConstraintValidator<CellphoneFormat, String> {
 
     private boolean required = false;
 
     @Autowired
     RegexUtils regexUtils;
 
-    public void initialize(Cellphone constraintAnnotation) {
+    public void initialize(CellphoneFormat constraintAnnotation) {
         required = constraintAnnotation.required();
     }
 
