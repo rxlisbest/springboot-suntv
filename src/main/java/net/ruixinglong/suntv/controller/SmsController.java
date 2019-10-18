@@ -78,8 +78,8 @@ public class SmsController {
 
         try {
             CommonResponse response = client.getCommonResponse(commonRequest);
-            redisUtils.set(session.getId() + "_sms_code", templateParam, 5 * 60);
-            redisUtils.setRemove(session.getId() + "_captcha");
+            redisUtils.set(session.getId() + "_sms_code", templateParam, 5 * 60); // 存储短信验证码
+            redisUtils.setRemove(session.getId() + "_captcha"); // 清除图形验证码
             return response.getData();
         } catch (ServerException e) {
             throw new InternalServerErrorException(e.getMessage());

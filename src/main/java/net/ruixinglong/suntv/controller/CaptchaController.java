@@ -18,7 +18,7 @@ import java.io.IOException;
 
 @ResponseBody
 @RestController
-@RequestMapping(value = "captcha")
+//@RequestMapping(value = "captcha")
 public class CaptchaController {
 
     @Autowired
@@ -27,7 +27,7 @@ public class CaptchaController {
     @Autowired
     RedisUtils redisUtils;
 
-    @RequestMapping("/123")
+    @RequestMapping("/captcha")
     public void defaultKaptcha(HttpSession session, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
         byte[] captchaChallengeAsJpeg = null;
         ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();
