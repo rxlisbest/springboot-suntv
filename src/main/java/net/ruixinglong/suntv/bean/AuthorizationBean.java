@@ -8,5 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "authorization")
 public class AuthorizationBean {
+
     private String secret;
 }

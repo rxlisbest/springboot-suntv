@@ -16,11 +16,11 @@ import net.ruixinglong.suntv.utils.LocaleMessageUtils;
 import net.ruixinglong.suntv.utils.RedisUtils;
 import net.ruixinglong.suntv.utils.RegexUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import javax.validation.Valid;
 
 @ResponseBody
 @RestController
@@ -34,11 +34,11 @@ public class SmsController {
     RegexUtils regexUtils;
 
     @PostMapping("/create")
-    public String create(HttpSession session, @RequestBody SendSmsBean request) throws Exception {
-        System.out.println(session.getId());
-        if (request.getCellphone() == null || request.getCaptcha() == null) {
-            throw new BadRequestException(LocaleMessageUtils.getMsg("bad_param"));
+    public String create(HttpSession session, @RequestBody @Valid SendSmsBean request, BindingResult bindingResult) throws Exception {
+        if (bindingResult.hasErrors()) {
+            throw new BadRequestException(LocaleMessageUtils.getMsg(bindingResult.getFieldError().getDefaultMessage()));
         }
+
         if (!regexUtils.cellphone(request.getCellphone())) {
             throw new BadRequestException(LocaleMessageUtils.getMsg("sms.create.bad_cellphone_format"));
         }
@@ -46,8 +46,6 @@ public class SmsController {
         String captcha;
         if (captchaObject != null) {
             captcha = captchaObject.toString();
-            System.out.println(captcha);
-            System.out.println(request.getCaptcha());
             if (!captcha.equals(request.getCaptcha())) {
                 throw new BadRequestException(LocaleMessageUtils.getMsg("sms.create.bad_captcha"));
             }
@@ -85,18 +83,6 @@ public class SmsController {
             throw new InternalServerErrorException(e.getMessage());
         } catch (ClientException e) {
             throw new InternalServerErrorException(e.getMessage());
-        }
-    }
-
-    public static boolean isPhone(String phone) {
-        String regex = "^((13[0-9])|(14[5,7,9])|(15([0-3]|[5-9]))|(166)|(17[0,1,3,5,6,7,8])|(18[0-9])|(19[8|9]))\\d{8}$";
-        if (phone.length() != 11) {
-            return false;
-        } else {
-            Pattern p = Pattern.compile(regex);
-            Matcher m = p.matcher(phone);
-            boolean isMatch = m.matches();
-            return isMatch;
         }
     }
 }

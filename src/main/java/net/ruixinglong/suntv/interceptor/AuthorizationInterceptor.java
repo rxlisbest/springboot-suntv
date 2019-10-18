@@ -36,7 +36,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
         String tokenHeader = httpServletRequest.getHeader(paramHeader);
         String tokenParameter = httpServletRequest.getParameter(paramParameter);
         if (tokenHeader == null && tokenParameter == null) {
-            throw new BadRequestException(LocaleMessageUtils.getMsg("authorization.empty"));
+            throw new BadRequestException(LocaleMessageUtils.getMsg("request.authorization_empty"));
         }
         String token = null;
         if (tokenHeader != null) {

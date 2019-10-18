@@ -20,6 +20,7 @@ public class AuthorizationConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry){
         registry.addInterceptor(authorizationInterceptor())
                 .addPathPatterns("/**")
+                .excludePathPatterns("/error")
                 .excludePathPatterns("/sms/create")
                 .excludePathPatterns("/users/login")
                 .excludePathPatterns("/captcha");
