@@ -6,12 +6,10 @@ import org.springframework.stereotype.Component;
 
 @Data
 @Component
-@ConfigurationProperties(prefix = "aliyun")
-public class AliyunBean {
+@ConfigurationProperties(prefix = "aliyun.sms")
+public class AliyunSmsBean {
 
-    private String accessKeyId;
+    private String SignName;
 
-    private String secret;
-
-    private AliyunSmsBean sms;
+    private String TemplateCode;
 }

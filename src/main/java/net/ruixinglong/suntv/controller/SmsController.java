@@ -67,8 +67,8 @@ public class SmsController {
         commonRequest.putQueryParameter("RegionId", "cn-hangzhou");
 
         commonRequest.putQueryParameter("PhoneNumbers", request.getCellphone());
-        commonRequest.putQueryParameter("SignName", "SunTV");
-        commonRequest.putQueryParameter("TemplateCode", "SMS_175570808");
+        commonRequest.putQueryParameter("SignName", aliyunBean.getSms().getSignName());
+        commonRequest.putQueryParameter("TemplateCode", aliyunBean.getSms().getTemplateCode());
         commonRequest.putQueryParameter("TemplateParam", templateParam);
 
         try {

@@ -9,5 +9,4 @@ public class SuntvApplication {
     public static void main(String[] args) {
         SpringApplication.run(SuntvApplication.class, args);
     }
-
 }

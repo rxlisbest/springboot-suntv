@@ -50,6 +50,9 @@ authorization:
 aliyun:
   accessKeyId: LTAI4FrKXRqfyakYFdXbEc7M
   secret: nAXjlAjShJ7cdhrOoBV4deQAXJvqjT
+  sms:
+    SignName: SunTV
+    TemplateCode: SMS_175570808
 
 pagination:
   pageSize: 1
