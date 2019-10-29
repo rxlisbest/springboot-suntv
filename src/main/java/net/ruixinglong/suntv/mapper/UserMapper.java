@@ -8,13 +8,21 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-    List<UserEntity> index();
+    List<UserEntity> findAll();
 
-    UserEntity view(int id);
+    UserEntity findOne(int id);
 
     int create(UserEntity user);
 
-    int update(UserEntity user);
+    int update(int id, UserEntity user);
 
-    int delete(UserEntity user);
+    int delete(int id);
+
+    UserEntity findOneByCellphone(String cellphone);
+
+    UserEntity findOneByIdAndCellphone(Integer id, String cellphone);
+
+    Integer countByCellphone(String cellphone);
+
+    Integer countByUsername(String username);
 }

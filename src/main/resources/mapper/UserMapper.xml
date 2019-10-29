@@ -12,11 +12,11 @@
         <result column="update_time" jdbcType="VARCHAR" property="update_time" javaType="int" />
     </resultMap>
 
-    <select id="index" resultType="net.ruixinglong.suntv.entity.UserEntity">
+    <select id="findAll" resultType="net.ruixinglong.suntv.entity.UserEntity">
         select * from user
     </select>
 
-    <select id="view" resultType="net.ruixinglong.suntv.entity.UserEntity">
+    <select id="findOne" resultType="net.ruixinglong.suntv.entity.UserEntity">
         select * from `user` WHERE id = #{id}
     </select>
 
@@ -25,10 +25,26 @@
     </insert>
 
     <update id="update" parameterType="net.ruixinglong.suntv.entity.UserEntity">
-        UPDATE `user` SET `username` = #{username}, `name` = #{name}, `password` = #{password}, `update_time` = unix_timestamp(now()) WHERE id = #{id}
+        UPDATE `user` SET `username` = #{user.username}, `name` = #{user.name}, `cellphone` = #{user.cellphone}, `update_time` = unix_timestamp(now()) WHERE id = #{id}
     </update>
 
     <delete id="delete" parameterType="net.ruixinglong.suntv.entity.UserEntity">
         DELETE FROM `user` WHERE id = #{id}
     </delete>
+
+    <select id="findOneByCellphone" resultType="net.ruixinglong.suntv.entity.UserEntity">
+        select * from `user` WHERE cellphone = #{cellphone} LIMIT 1
+    </select>
+
+    <select id="findOneByIdAndCellphone" resultType="net.ruixinglong.suntv.entity.UserEntity">
+        select * from `user` WHERE id = #{id} AND cellphone = #{cellphone} LIMIT 1
+    </select>
+
+    <select id="countByCellphone" resultType="java.lang.Integer">
+        select COUNT(0) from `user` WHERE cellphone = #{cellphone}
+    </select>
+
+    <select id="countByUsername" resultType="java.lang.Integer">
+        select COUNT(0) from `user` WHERE username = #{username}
+    </select>
 </mapper>
