@@ -35,6 +35,10 @@ public class UserService {
         if (countCellphone > 0) {
             throw new BadRequestException(LocaleMessageUtils.getMsg("user.cellphone_used"));
         }
+        Integer countByUsername = userMapper.countByUsername(user.getUsername());
+        if (countByUsername > 0) {
+            throw new BadRequestException(LocaleMessageUtils.getMsg("user.username_used"));
+        }
         int rows = userMapper.create(user);
         return user.getId();
     }

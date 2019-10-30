@@ -16,6 +16,7 @@ import net.ruixinglong.suntv.exception.InternalServerErrorException;
 import net.ruixinglong.suntv.utils.LocaleMessageUtils;
 import net.ruixinglong.suntv.utils.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +34,7 @@ public class SmsController {
     @Autowired
     AliyunBean aliyunBean;
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create")
     public String create(HttpSession session, @RequestBody @Valid SendSmsBean request, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {

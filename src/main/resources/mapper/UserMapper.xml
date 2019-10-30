@@ -13,11 +13,11 @@
     </resultMap>
 
     <select id="findAll" resultType="net.ruixinglong.suntv.entity.UserEntity">
-        select * from user
+        SELECT * FROM `user`
     </select>
 
     <select id="findOne" resultType="net.ruixinglong.suntv.entity.UserEntity">
-        select * from `user` WHERE id = #{id}
+        SELECT * FROM `user` WHERE id = #{id}
     </select>
 
     <insert id="create" parameterType="net.ruixinglong.suntv.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
@@ -33,18 +33,18 @@
     </delete>
 
     <select id="findOneByCellphone" resultType="net.ruixinglong.suntv.entity.UserEntity">
-        select * from `user` WHERE cellphone = #{cellphone} LIMIT 1
+        SELECT * FROM `user` WHERE cellphone = #{cellphone} LIMIT 1
     </select>
 
     <select id="findOneByIdAndCellphone" resultType="net.ruixinglong.suntv.entity.UserEntity">
-        select * from `user` WHERE id = #{id} AND cellphone = #{cellphone} LIMIT 1
+        SELECT * FROM `user` WHERE id = #{id} AND cellphone = #{cellphone} LIMIT 1
     </select>
 
     <select id="countByCellphone" resultType="java.lang.Integer">
-        select COUNT(0) from `user` WHERE cellphone = #{cellphone}
+        SELECT COUNT(0) FROM `user` WHERE cellphone = #{cellphone}
     </select>
 
     <select id="countByUsername" resultType="java.lang.Integer">
-        select COUNT(0) from `user` WHERE username = #{username}
+        SELECT COUNT(0) FROM `user` WHERE username = #{username}
     </select>
 </mapper>

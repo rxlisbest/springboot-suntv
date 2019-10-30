@@ -82,7 +82,7 @@ public class SunTvExceptionHandler {
 
     private ExceptionBean setExceptionBean(int status, String error, String path) {
         ExceptionBean exceptionBean = new ExceptionBean();
-        exceptionBean.setTimestamp(Long.toString(new Date().getTime() / 1000));
+        exceptionBean.setTimestamp(Long.toString(new Date().getTime()));
         exceptionBean.setStatus(status);
         exceptionBean.setError(error);
         exceptionBean.setMessage("No message available");
@@ -92,7 +92,7 @@ public class SunTvExceptionHandler {
 
     private ExceptionBean setExceptionBean(int status, String error, String message, String path) {
         ExceptionBean exceptionBean = new ExceptionBean();
-        exceptionBean.setTimestamp(Long.toString(new Date().getTime() / 1000));
+        exceptionBean.setTimestamp(Long.toString(new Date().getTime()));
         exceptionBean.setStatus(status);
         exceptionBean.setError(error);
         exceptionBean.setMessage(message);

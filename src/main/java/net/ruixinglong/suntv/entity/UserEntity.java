@@ -11,6 +11,7 @@ import org.hibernate.validator.group.GroupSequenceProvider;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Data
 //@GroupSequenceProvider(value = UserEntityGroupSequenceProvider.class)
@@ -19,6 +20,7 @@ public class UserEntity {
     private int id;
 
     @NotNull(message = "user.name.can_not_null")
+    @Length(min = 1, max = 100, message = "user.name.length")
     private String name;
 
     @NotNull(message = "user.username.can_not_null")
