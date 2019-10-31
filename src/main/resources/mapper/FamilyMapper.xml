@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.ruixinglong.suntv.mapper.FamilyMapper">
+
+    <resultMap id="BaseResultMap" type="net.ruixinglong.suntv.entity.FamilyEntity">
+        <result column="id" jdbcType="INTEGER" property="id" javaType="int" />
+        <result column="name" jdbcType="VARCHAR" property="name" javaType="string" />
+        <result column="create_user_id" jdbcType="VARCHAR" property="create_user_id" javaType="int" />
+        <result column="create_time" jdbcType="VARCHAR" property="create_time" javaType="int" />
+        <result column="update_time" jdbcType="VARCHAR" property="update_time" javaType="int" />
+    </resultMap>
+
+    <select id="findAll" resultType="net.ruixinglong.suntv.entity.FamilyEntity">
+        SELECT * FROM `family`
+    </select>
+
+    <select id="findOne" resultType="net.ruixinglong.suntv.entity.FamilyEntity">
+        SELECT * FROM `family` WHERE id = #{id}
+    </select>
+
+    <insert id="create" parameterType="net.ruixinglong.suntv.entity.FamilyEntity" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `family` (`name`, `create_user_id`, `create_time`, `update_time`) VALUES (#{name}, #{create_user_id}, unix_timestamp(now()), 0)
+    </insert>
+
+    <update id="update" parameterType="net.ruixinglong.suntv.entity.FamilyEntity">
+        UPDATE `family` SET `name` = #{family.name}, `update_time` = unix_timestamp(now()) WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="net.ruixinglong.suntv.entity.FamilyEntity">
+        DELETE FROM `family` WHERE id = #{id}
+    </delete>
+</mapper>
