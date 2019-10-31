@@ -6,12 +6,12 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class FamilyEntity {
+public class ChannelCategoryEntity {
 
     private int id;
 
-    @NotNull(message = "family.name.can_not_null")
-    @Length(min = 1, max = 100, message = "family.name.length")
+    @NotNull(message = "channel_category.name.can_not_null")
+    @Length(min = 1, max = 100, message = "channel_category.name.length")
     private String name;
 
     private int create_user_id;
@@ -21,4 +21,7 @@ public class FamilyEntity {
     private Integer update_time;
 
     private int status;
+
+    @NotNull(message = "channel_category.family_id.can_not_null")
+    private int family_id;
 }

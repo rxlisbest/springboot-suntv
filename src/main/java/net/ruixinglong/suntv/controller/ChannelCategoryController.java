@@ -1,11 +1,11 @@
 package net.ruixinglong.suntv.controller;
 
 import com.github.pagehelper.PageInfo;
-import net.ruixinglong.suntv.bean.FamilyUpdateStatusBean;
-import net.ruixinglong.suntv.entity.FamilyEntity;
+import net.ruixinglong.suntv.bean.ChannelCategoryUpdateStatusBean;
+import net.ruixinglong.suntv.entity.ChannelCategoryEntity;
 import net.ruixinglong.suntv.exception.BadRequestException;
 import net.ruixinglong.suntv.exception.NotFoundException;
-import net.ruixinglong.suntv.service.FamilyService;
+import net.ruixinglong.suntv.service.ChannelCategoryService;
 import net.ruixinglong.suntv.utils.LocaleMessageUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -17,21 +17,21 @@ import javax.validation.Valid;
 
 @ResponseBody
 @RestController
-@RequestMapping(value = "families")
-public class FamilyController {
+@RequestMapping(value = "channel-categories")
+public class ChannelCategoryController {
 
     @Resource
-    private FamilyService familyService;
+    private ChannelCategoryService channelCategoryService;
 
     @GetMapping("/index")
-    public PageInfo<FamilyEntity> index() throws Exception {
-        PageInfo<FamilyEntity> list = familyService.findAll(1, 2);
+    public PageInfo<ChannelCategoryEntity> index() throws Exception {
+        PageInfo<ChannelCategoryEntity> list = channelCategoryService.findAll(1, 2);
         return list;
     }
 
     @GetMapping("/view/{id}")
-    public FamilyEntity view(@PathVariable int id) throws Exception {
-        FamilyEntity info = familyService.findOne(id);
+    public ChannelCategoryEntity view(@PathVariable int id) throws Exception {
+        ChannelCategoryEntity info = channelCategoryService.findOne(id);
         if (info == null) {
             throw new NotFoundException(LocaleMessageUtils.getMsg("record.not_found"));
         }
@@ -40,38 +40,38 @@ public class FamilyController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create")
-    public FamilyEntity create(@RequestBody @Valid FamilyEntity request, BindingResult bindingResult, HttpServletRequest httpServletRequest) throws Exception {
+    public ChannelCategoryEntity create(@RequestBody @Valid ChannelCategoryEntity request, BindingResult bindingResult, HttpServletRequest httpServletRequest) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException(LocaleMessageUtils.getMsg(bindingResult.getFieldError().getDefaultMessage()));
         }
         request.setCreate_user_id((Integer) httpServletRequest.getAttribute("user_id"));
-        Integer id = familyService.create(request);
-        FamilyEntity familyEntity = familyService.findOne(id);
-        return familyEntity;
+        Integer id = channelCategoryService.create(request);
+        ChannelCategoryEntity channelCategoryEntity = channelCategoryService.findOne(id);
+        return channelCategoryEntity;
     }
 
     @PutMapping("/update/{id}")
-    public Integer update(@PathVariable int id, @RequestBody @Valid FamilyEntity request, BindingResult bindingResult) throws Exception {
+    public Integer update(@PathVariable int id, @RequestBody @Valid ChannelCategoryEntity request, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException(LocaleMessageUtils.getMsg(bindingResult.getFieldError().getDefaultMessage()));
         }
-        Integer rows = familyService.update(id, request);
+        Integer rows = channelCategoryService.update(id, request);
         return rows;
     }
 
     @PatchMapping("/update-status/{id}")
-    public Integer updateStatus(@PathVariable int id, @RequestBody @Valid FamilyUpdateStatusBean request, BindingResult bindingResult) throws Exception {
+    public Integer updateStatus(@PathVariable int id, @RequestBody @Valid ChannelCategoryUpdateStatusBean request, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException(LocaleMessageUtils.getMsg(bindingResult.getFieldError().getDefaultMessage()));
         }
-        Integer rows = familyService.updateStatus(id, request);
+        Integer rows = channelCategoryService.updateStatus(id, request);
         return rows;
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/delete/{id}")
     public Integer delete(@PathVariable int id) {
-        Integer rows = familyService.delete(id);
+        Integer rows = channelCategoryService.delete(id);
         return rows;
     }
 }

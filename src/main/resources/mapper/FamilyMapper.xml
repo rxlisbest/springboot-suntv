@@ -29,4 +29,8 @@
     <delete id="delete" parameterType="net.ruixinglong.suntv.entity.FamilyEntity">
         DELETE FROM `family` WHERE id = #{id}
     </delete>
+
+    <update id="updateStatus" parameterType="net.ruixinglong.suntv.bean.FamilyUpdateStatusBean">
+        UPDATE `family` SET `status` = #{familyUpdateStatusBean.status}, `update_time` = unix_timestamp(now()) WHERE id = #{id}
+    </update>
 </mapper>

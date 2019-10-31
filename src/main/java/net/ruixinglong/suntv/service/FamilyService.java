@@ -2,6 +2,7 @@ package net.ruixinglong.suntv.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import net.ruixinglong.suntv.bean.FamilyUpdateStatusBean;
 import net.ruixinglong.suntv.entity.FamilyEntity;
 import net.ruixinglong.suntv.exception.NotFoundException;
 import net.ruixinglong.suntv.mapper.FamilyMapper;
@@ -40,6 +41,20 @@ public class FamilyService {
             throw new NotFoundException(LocaleMessageUtils.getMsg("record.not_found"));
         }
         int rows = familyMapper.update(id, family);
+        return rows;
+    }
+
+    public int updateStatus(Integer id, FamilyUpdateStatusBean familyUpdateStatusBean) throws Exception {
+        FamilyEntity familyEntity = familyMapper.findOne(id);
+        if (familyEntity == null) {
+            throw new NotFoundException(LocaleMessageUtils.getMsg("record.not_found"));
+        }
+        int rows = familyMapper.updateStatus(id, familyUpdateStatusBean);
+        return rows;
+    }
+
+    public int delete(int id) {
+        int rows = familyMapper.delete(id);
         return rows;
     }
 }
