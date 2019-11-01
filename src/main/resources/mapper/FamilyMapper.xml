@@ -5,9 +5,9 @@
     <resultMap id="BaseResultMap" type="net.ruixinglong.suntv.entity.FamilyEntity">
         <result column="id" jdbcType="INTEGER" property="id" javaType="int" />
         <result column="name" jdbcType="VARCHAR" property="name" javaType="string" />
-        <result column="create_user_id" jdbcType="VARCHAR" property="create_user_id" javaType="int" />
-        <result column="create_time" jdbcType="VARCHAR" property="create_time" javaType="int" />
-        <result column="update_time" jdbcType="VARCHAR" property="update_time" javaType="int" />
+        <result column="create_user_id" jdbcType="INTEGER" property="create_user_id" javaType="int" />
+        <result column="create_time" jdbcType="INTEGER" property="create_time" javaType="int" />
+        <result column="update_time" jdbcType="INTEGER" property="update_time" javaType="int" />
     </resultMap>
 
     <select id="findAll" resultType="net.ruixinglong.suntv.entity.FamilyEntity">

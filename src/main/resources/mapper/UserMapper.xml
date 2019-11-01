@@ -8,8 +8,8 @@
         <result column="username" jdbcType="VARCHAR" property="username" javaType="string" />
         <result column="password" jdbcType="VARCHAR" property="password" javaType="string" />
         <result column="cellphone" jdbcType="VARCHAR" property="cellphone" javaType="string" />
-        <result column="create_time" jdbcType="VARCHAR" property="create_time" javaType="int" />
-        <result column="update_time" jdbcType="VARCHAR" property="update_time" javaType="int" />
+        <result column="create_time" jdbcType="INTEGER" property="create_time" javaType="int" />
+        <result column="update_time" jdbcType="INTEGER" property="update_time" javaType="int" />
     </resultMap>
 
     <select id="findAll" resultType="net.ruixinglong.suntv.entity.UserEntity">
