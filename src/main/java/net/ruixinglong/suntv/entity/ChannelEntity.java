@@ -21,6 +21,7 @@ public class ChannelEntity {
 //    @Min(value = 1, message = "channel.file_id.can_not_null")
     private int file_id;
 
+    @NotNull(message = "channel.url.can_not_null")
     private String url;
 
     private int create_user_id;
