@@ -56,3 +56,8 @@ aliyun:
 
 pagination:
   pageSize: 1
+
+qiniu:
+  accessKey: rvFpdysNlsz6QoxvHPLmV_spy8J-pWCk0sRIfhd1
+  secretKey: WFQZn5SoDRhJC_70Goc5QR3PkdPzh2s501kgTQL5
+  bucket: rxlisbest-suntv
