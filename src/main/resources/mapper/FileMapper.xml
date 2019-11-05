@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.ruixinglong.suntv.mapper.FileMapper">
+
+    <resultMap id="BaseResultMap" type="net.ruixinglong.suntv.entity.FileEntity">
+        <result column="id" jdbcType="INTEGER" property="id" javaType="int" />
+        <result column="domain" jdbcType="VARCHAR" property="domain" javaType="string" />
+        <result column="key" jdbcType="VARCHAR" property="key" javaType="string" />
+        <result column="content_type" jdbcType="VARCHAR" property="content_type" javaType="string" />
+        <result column="number" jdbcType="INTEGER" property="number" javaType="int" />
+        <result column="transcoding_code" jdbcType="VARCHAR" property="transcoding_code" javaType="string" />
+        <result column="source_key" jdbcType="VARCHAR" property="source_key" javaType="string" />
+        <result column="source_content_type" jdbcType="VARCHAR" property="source_content_type" javaType="string" />
+        <result column="create_user_id" jdbcType="INTEGER" property="create_user_id" javaType="int" />
+        <result column="create_time" jdbcType="INTEGER" property="create_time" javaType="int" />
+        <result column="update_time" jdbcType="INTEGER" property="update_time" javaType="int" />
+    </resultMap>
+
+    <select id="findAll" resultType="net.ruixinglong.suntv.entity.FileEntity">
+        SELECT * FROM `file`
+    </select>
+
+    <select id="findOne" resultType="net.ruixinglong.suntv.entity.FileEntity">
+        SELECT * FROM `file` WHERE id = #{id}
+    </select>
+
+    <insert id="create" parameterType="net.ruixinglong.suntv.entity.FileEntity" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `file` (`domain`, `key`, `create_user_id`, `create_time`, `update_time`) VALUES (#{domain}, #{key}, #{create_user_id}, unix_timestamp(now()), 0)
+    </insert>
+
+    <update id="update" parameterType="net.ruixinglong.suntv.entity.FileEntity">
+        UPDATE `file` SET `name` = #{file.name}, `update_time` = unix_timestamp(now()) WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="net.ruixinglong.suntv.entity.FileEntity">
+        DELETE FROM `file` WHERE id = #{id}
+    </delete>
+</mapper>

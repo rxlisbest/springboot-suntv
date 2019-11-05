@@ -14,4 +14,6 @@ public class QiniuBean {
     private String secretKey;
 
     private String bucket;
+
+    private String cdnDomain;
 }
