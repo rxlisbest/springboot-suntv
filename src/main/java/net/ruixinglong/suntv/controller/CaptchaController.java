@@ -31,7 +31,6 @@ public class CaptchaController {
     @Autowired
     RedisUtils redisUtils;
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
     @RequestMapping(value = "/captcha.jpg", produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] defaultKaptcha(HttpSession session, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
         byte[] captchaChallengeAsJpeg = null;
@@ -49,6 +48,19 @@ public class CaptchaController {
         }
         // 定义response输出类型为image/jpeg类型，使用response输出流输出图片的byte数组
         captchaChallengeAsJpeg = jpegOutputStream.toByteArray();
+//        httpServletResponse.setHeader("Accept-Ranges", "bytes");
+//        httpServletResponse.setHeader("Age", "13359793");
+        httpServletResponse.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
+        httpServletResponse.setHeader("Connection", "keep-alive");
+        httpServletResponse.setHeader("Pragma", "no-cache");
+        httpServletResponse.setHeader("Server", "nginx");
+////        httpServletResponse.setHeader("Pragma", "no-cache");Accept-Ranges: bytes
+        httpServletResponse.setDateHeader("Expires", -1);
+//        httpServletResponse.setContentType("image/jpeg");
+//        ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream();
+//        responseOutputStream.write(captchaChallengeAsJpeg);
+//        responseOutputStream.flush();
+//        responseOutputStream.close();
         return captchaChallengeAsJpeg;
     }
 }
