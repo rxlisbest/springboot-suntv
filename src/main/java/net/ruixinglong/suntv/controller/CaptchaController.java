@@ -55,7 +55,7 @@ public class CaptchaController {
         httpServletResponse.setHeader("Pragma", "no-cache");
         httpServletResponse.setHeader("Server", "nginx");
 ////        httpServletResponse.setHeader("Pragma", "no-cache");Accept-Ranges: bytes
-        httpServletResponse.setDateHeader("Expires", -1);
+        httpServletResponse.setDateHeader("Expires", System.currentTimeMillis() + 36000000 * 24);
 //        httpServletResponse.setContentType("image/jpeg");
 //        ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream();
 //        responseOutputStream.write(captchaChallengeAsJpeg);
