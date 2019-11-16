@@ -1,12 +1,16 @@
 package net.ruixinglong.suntv.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.mysql.cj.xdevapi.JsonString;
 import net.ruixinglong.suntv.bean.AuthorizationBean;
+import net.ruixinglong.suntv.bean.UserLoginBean;
 import net.ruixinglong.suntv.entity.UserEntity;
 import net.ruixinglong.suntv.exception.BadRequestException;
 import net.ruixinglong.suntv.service.UserService;
 import net.ruixinglong.suntv.utils.LocaleMessageUtils;
+import net.ruixinglong.suntv.utils.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -26,13 +30,34 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    @Autowired
+    RedisUtils redisUtils;
+
     @PostMapping("/login")
-    public String login() {
+    public String login(@RequestBody @Valid UserLoginBean request, BindingResult bindingResult) throws Exception {
+        if (bindingResult.hasErrors()) {
+            throw new BadRequestException(LocaleMessageUtils.getMsg(bindingResult.getFieldError().getDefaultMessage()));
+        }
+        UserEntity userEntity = userService.findOneByCellphone(request.getCellphone());
+        if (userEntity == null) {
+            throw new BadRequestException(LocaleMessageUtils.getMsg("user.cellphone.not_exists"));
+        }
+        Object smsCodeObject = redisUtils.get("sms_code_" + request.getCellphone());
+        if (smsCodeObject == null) {
+            throw new BadRequestException(LocaleMessageUtils.getMsg("user.code.bad_value"));
+        }
+        String smsCodeJsonString = smsCodeObject.toString();
+        JSONObject smsCodeJsonObject = JSONObject.parseObject(smsCodeJsonString);
+        String smsCode = smsCodeJsonObject.getString("code");
+        if (!smsCode.equals(request.getCode())) {
+            throw new BadRequestException(LocaleMessageUtils.getMsg("user.code.bad_value"));
+        }
+
         Algorithm algorithm = Algorithm.HMAC256(authorizationBean.getSecret());
         String token = JWT.create()
-                .withClaim("id", 1)
-                .withClaim("username", "test")
-                .withClaim("name", "test")
+                .withClaim("id", userEntity.getName())
+                .withClaim("name", userEntity.getName())
+                .withClaim("cellphone", userEntity.getCellphone())
                 .sign(algorithm);
         return token;
     }

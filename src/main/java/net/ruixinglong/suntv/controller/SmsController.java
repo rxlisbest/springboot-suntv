@@ -73,15 +73,18 @@ public class SmsController {
         commonRequest.putQueryParameter("TemplateCode", aliyunBean.getSms().getTemplateCode());
         commonRequest.putQueryParameter("TemplateParam", templateParam);
 
-        try {
-            CommonResponse response = client.getCommonResponse(commonRequest);
-            redisUtils.set(session.getId() + "_sms_code", templateParam, 5 * 60); // 存储短信验证码
-            redisUtils.setRemove(session.getId() + "_captcha"); // 清除图形验证码
-            return response.getData();
-        } catch (ServerException e) {
-            throw new InternalServerErrorException(e.getMessage());
-        } catch (ClientException e) {
-            throw new InternalServerErrorException(e.getMessage());
-        }
+        redisUtils.set("sms_code_" + request.getCellphone(), templateParam, 5 * 60); // 存储短信验证码
+        redisUtils.setRemove(session.getId() + "_captcha"); // 清除图形验证码
+        return code + "";
+//        try {
+//            CommonResponse response = client.getCommonResponse(commonRequest);
+//            redisUtils.set("sms_code_" + request.getCellphone(), templateParam, 5 * 60); // 存储短信验证码
+//            redisUtils.setRemove(session.getId() + "_captcha"); // 清除图形验证码
+//            return response.getData();
+//        } catch (ServerException e) {
+//            throw new InternalServerErrorException(e.getMessage());
+//        } catch (ClientException e) {
+//            throw new InternalServerErrorException(e.getMessage());
+//        }
     }
 }
