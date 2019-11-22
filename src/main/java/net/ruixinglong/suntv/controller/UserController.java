@@ -34,7 +34,7 @@ public class UserController {
     RedisUtils redisUtils;
 
     @PostMapping("/login")
-    public String login(@RequestBody @Valid UserLoginBean request, BindingResult bindingResult) throws Exception {
+    public UserLoginBean login(@RequestBody @Valid UserLoginBean request, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException(LocaleMessageUtils.getMsg(bindingResult.getFieldError().getDefaultMessage()));
         }
@@ -59,7 +59,10 @@ public class UserController {
                 .withClaim("name", userEntity.getName())
                 .withClaim("cellphone", userEntity.getCellphone())
                 .sign(algorithm);
-        return token;
+        System.out.println(token);
+        request.setToken(token);
+        System.out.println(request);
+        return request;
     }
 
     @ResponseStatus(HttpStatus.CREATED)

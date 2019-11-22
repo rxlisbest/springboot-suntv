@@ -15,4 +15,6 @@ public class UserLoginBean {
 
     @NotNull(message = "request.bad_param")
     String code;
+
+    String token;
 }

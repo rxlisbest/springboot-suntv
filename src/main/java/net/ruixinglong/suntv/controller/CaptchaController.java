@@ -32,7 +32,7 @@ public class CaptchaController {
     RedisUtils redisUtils;
 
     @RequestMapping(value = "/captcha.jpg", produces = MediaType.IMAGE_JPEG_VALUE)
-    public byte[] defaultKaptcha(HttpSession session, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
+    public byte[] defaultKaptcha(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
         byte[] captchaChallengeAsJpeg = null;
         ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();
         try {
@@ -41,7 +41,7 @@ public class CaptchaController {
             //使用生产的验证码字符串返回一个BufferedImage对象并转为byte写入到byte数组中
             BufferedImage challenge = defaultKaptcha.createImage(createText);
             ImageIO.write(challenge, "jpg", jpegOutputStream);
-            redisUtils.set(session.getId() + "_captcha", createText, 5 * 60);
+            redisUtils.set("captcha_" + httpServletRequest.getParameter("client_id"), createText, 5 * 60);
         } catch (IllegalArgumentException | IOException e) {
             httpServletResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return captchaChallengeAsJpeg;

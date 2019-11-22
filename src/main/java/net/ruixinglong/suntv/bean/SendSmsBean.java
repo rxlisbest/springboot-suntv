@@ -14,4 +14,7 @@ public class SendSmsBean {
 
     @NotNull(message = "request.bad_param")
     String captcha;
+
+    @NotNull(message = "request.bad_param")
+    String client_id;
 }

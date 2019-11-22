@@ -36,12 +36,11 @@ public class SmsController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create")
-    public String create(HttpSession session, @RequestBody @Valid SendSmsBean request, BindingResult bindingResult) throws Exception {
+    public SendSmsBean create( @RequestBody @Valid SendSmsBean request, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException(LocaleMessageUtils.getMsg(bindingResult.getFieldError().getDefaultMessage()));
         }
-
-        Object captchaObject = redisUtils.get(session.getId() + "_captcha");
+        Object captchaObject = redisUtils.get("captcha_" + request.getClient_id());
         String captcha;
         if (captchaObject != null) {
             captcha = captchaObject.toString();
@@ -58,28 +57,28 @@ public class SmsController {
         int code = (int) ((Math.random() * 9 + 1) * 100000);
         JSONObject templateParamObject = new JSONObject();
         templateParamObject.put("code", code);
-
+        System.out.println(code);
         String templateParam = templateParamObject.toJSONString();
 
-        CommonRequest commonRequest = new CommonRequest();
-        commonRequest.setSysMethod(MethodType.POST);
-        commonRequest.setSysDomain("dysmsapi.aliyuncs.com");
-        commonRequest.setSysVersion("2017-05-25");
-        commonRequest.setSysAction("SendSms");
-        commonRequest.putQueryParameter("RegionId", "cn-hangzhou");
-
-        commonRequest.putQueryParameter("PhoneNumbers", request.getCellphone());
-        commonRequest.putQueryParameter("SignName", aliyunBean.getSms().getSignName());
-        commonRequest.putQueryParameter("TemplateCode", aliyunBean.getSms().getTemplateCode());
-        commonRequest.putQueryParameter("TemplateParam", templateParam);
+//        CommonRequest commonRequest = new CommonRequest();
+//        commonRequest.setSysMethod(MethodType.POST);
+//        commonRequest.setSysDomain("dysmsapi.aliyuncs.com");
+//        commonRequest.setSysVersion("2017-05-25");
+//        commonRequest.setSysAction("SendSms");
+//        commonRequest.putQueryParameter("RegionId", "cn-hangzhou");
+//
+//        commonRequest.putQueryParameter("PhoneNumbers", request.getCellphone());
+//        commonRequest.putQueryParameter("SignName", aliyunBean.getSms().getSignName());
+//        commonRequest.putQueryParameter("TemplateCode", aliyunBean.getSms().getTemplateCode());
+//        commonRequest.putQueryParameter("TemplateParam", templateParam);
 
         redisUtils.set("sms_code_" + request.getCellphone(), templateParam, 5 * 60); // 存储短信验证码
-        redisUtils.setRemove(session.getId() + "_captcha"); // 清除图形验证码
-        return code + "";
+        redisUtils.setRemove("captcha_" + request.getClient_id()); // 清除图形验证码
+        return request;
 //        try {
 //            CommonResponse response = client.getCommonResponse(commonRequest);
 //            redisUtils.set("sms_code_" + request.getCellphone(), templateParam, 5 * 60); // 存储短信验证码
-//            redisUtils.setRemove(session.getId() + "_captcha"); // 清除图形验证码
+//            redisUtils.setRemove(session.getId() + "captcha"); // 清除图形验证码
 //            return response.getData();
 //        } catch (ServerException e) {
 //            throw new InternalServerErrorException(e.getMessage());
