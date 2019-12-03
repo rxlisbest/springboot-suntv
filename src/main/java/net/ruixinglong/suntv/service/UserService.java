@@ -1,5 +1,6 @@
 package net.ruixinglong.suntv.service;
 
+import net.ruixinglong.suntv.bean.UserRegisterBean;
 import net.ruixinglong.suntv.entity.UserEntity;
 import net.ruixinglong.suntv.exception.BadRequestException;
 import net.ruixinglong.suntv.exception.NotFoundException;
@@ -41,6 +42,13 @@ public class UserService {
         }
         int rows = userMapper.create(user);
         return user.getId();
+    }
+
+    public int register(UserRegisterBean userRegisterBean) throws Exception {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setName(userRegisterBean.getName());
+        userEntity.setCellphone(userRegisterBean.getCellphone());
+        return this.create(userEntity);
     }
 
     @Transactional

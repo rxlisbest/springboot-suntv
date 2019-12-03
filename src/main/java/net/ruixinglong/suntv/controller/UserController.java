@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.mysql.cj.xdevapi.JsonString;
 import net.ruixinglong.suntv.bean.AuthorizationBean;
 import net.ruixinglong.suntv.bean.UserLoginBean;
+import net.ruixinglong.suntv.bean.UserRegisterBean;
 import net.ruixinglong.suntv.entity.UserEntity;
 import net.ruixinglong.suntv.exception.BadRequestException;
 import net.ruixinglong.suntv.service.UserService;
@@ -59,10 +60,29 @@ public class UserController {
                 .withClaim("name", userEntity.getName())
                 .withClaim("cellphone", userEntity.getCellphone())
                 .sign(algorithm);
-        System.out.println(token);
         request.setToken(token);
-        System.out.println(request);
         return request;
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/register")
+    public UserEntity register(@RequestBody @Valid UserRegisterBean request, BindingResult bindingResult) throws Exception {
+        if (bindingResult.hasErrors()) {
+            throw new BadRequestException(LocaleMessageUtils.getMsg(bindingResult.getFieldError().getDefaultMessage()));
+        }
+        Object smsCodeObject = redisUtils.get("sms_code_" + request.getCellphone());
+        if (smsCodeObject == null) {
+            throw new BadRequestException(LocaleMessageUtils.getMsg("user.code.bad_value"));
+        }
+        String smsCodeJsonString = smsCodeObject.toString();
+        JSONObject smsCodeJsonObject = JSONObject.parseObject(smsCodeJsonString);
+        String smsCode = smsCodeJsonObject.getString("code");
+        if (!smsCode.equals(request.getCode())) {
+            throw new BadRequestException(LocaleMessageUtils.getMsg("user.code.bad_value"));
+        }
+        Integer id = userService.register(request);
+        UserEntity userEntity = userService.findOne(id);
+        return userEntity;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
