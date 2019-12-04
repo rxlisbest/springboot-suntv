@@ -9,6 +9,7 @@ import net.ruixinglong.suntv.utils.LocaleMessageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.DigestUtils;
 
 import java.util.List;
 
@@ -48,6 +49,9 @@ public class UserService {
         UserEntity userEntity = new UserEntity();
         userEntity.setName(userRegisterBean.getName());
         userEntity.setCellphone(userRegisterBean.getCellphone());
+        userEntity.setUsername("");
+        String password = DigestUtils.md5DigestAsHex(userRegisterBean.getPassword().getBytes());
+        userEntity.setPassword(password);
         return this.create(userEntity);
     }
 

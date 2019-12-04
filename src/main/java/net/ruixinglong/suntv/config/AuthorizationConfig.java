@@ -23,6 +23,8 @@ public class AuthorizationConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/error")
                 .excludePathPatterns("/sms/create")
                 .excludePathPatterns("/users/login")
+                .excludePathPatterns("/users/register")
+                .excludePathPatterns("/users/password-login")
                 .excludePathPatterns("/captcha.jpg");
         WebMvcConfigurer.super.addInterceptors(registry);
     }

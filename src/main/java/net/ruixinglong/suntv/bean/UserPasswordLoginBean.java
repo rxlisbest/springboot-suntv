@@ -6,17 +6,11 @@ import net.ruixinglong.suntv.constraint.CellphoneFormat;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class UserRegisterBean {
-
-    @NotNull(message = "request.bad_param")
-    String name;
+public class UserPasswordLoginBean {
 
     @NotNull(message = "request.bad_param")
     @CellphoneFormat
     String cellphone;
-
-    @NotNull(message = "request.bad_param")
-    String code;
 
     @NotNull(message = "request.bad_param")
     String password;
