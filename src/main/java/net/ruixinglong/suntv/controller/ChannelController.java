@@ -2,11 +2,13 @@ package net.ruixinglong.suntv.controller;
 
 import com.github.pagehelper.PageInfo;
 import net.ruixinglong.suntv.bean.ChannelUpdateStatusBean;
+import net.ruixinglong.suntv.bean.PaginationBean;
 import net.ruixinglong.suntv.entity.ChannelEntity;
 import net.ruixinglong.suntv.exception.BadRequestException;
 import net.ruixinglong.suntv.exception.NotFoundException;
 import net.ruixinglong.suntv.service.ChannelService;
 import net.ruixinglong.suntv.utils.LocaleMessageUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +25,15 @@ public class ChannelController {
     @Resource
     private ChannelService channelService;
 
+    @Autowired
+    PaginationBean paginationBean;
+
     @GetMapping("/index")
-    public PageInfo<ChannelEntity> index() throws Exception {
-        PageInfo<ChannelEntity> list = channelService.findAll(1, 2);
+    public PageInfo<ChannelEntity> index(Integer page) throws Exception {
+        if (page == null) {
+            page = 1;
+        }
+        PageInfo<ChannelEntity> list = channelService.findAll(page, paginationBean.getPageSize());
         return list;
     }
 

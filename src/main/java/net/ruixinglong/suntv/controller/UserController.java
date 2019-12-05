@@ -3,7 +3,6 @@ package net.ruixinglong.suntv.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.mysql.cj.xdevapi.JsonString;
 import net.ruixinglong.suntv.bean.AuthorizationBean;
 import net.ruixinglong.suntv.bean.UserLoginBean;
 import net.ruixinglong.suntv.bean.UserPasswordLoginBean;
@@ -59,7 +58,7 @@ public class UserController {
 
         Algorithm algorithm = Algorithm.HMAC256(authorizationBean.getSecret());
         String token = JWT.create()
-                .withClaim("id", userEntity.getName())
+                .withClaim("id", userEntity.getId())
                 .withClaim("name", userEntity.getName())
                 .withClaim("cellphone", userEntity.getCellphone())
                 .sign(algorithm);
@@ -126,7 +125,7 @@ public class UserController {
 
         Algorithm algorithm = Algorithm.HMAC256(authorizationBean.getSecret());
         String token = JWT.create()
-                .withClaim("id", userEntity.getName())
+                .withClaim("id", userEntity.getId())
                 .withClaim("name", userEntity.getName())
                 .withClaim("cellphone", userEntity.getCellphone())
                 .sign(algorithm);
