@@ -30,8 +30,8 @@ public class FileController {
     @Resource
     private FileService fileService;
 
-    @GetMapping("/upToken")
-    public String upToken(@Valid FileUpTokenBean request, BindingResult bindingResult) throws Exception {
+    @GetMapping("/up-token")
+    public FileUpTokenBean upToken(@Valid FileUpTokenBean request, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException(LocaleMessageUtils.getMsg(bindingResult.getFieldError().getDefaultMessage()));
         }
@@ -42,7 +42,10 @@ public class FileController {
 
         Auth auth = Auth.create(accessKey, secretKey);
         String upToken = auth.uploadToken(bucket, key);
-        return upToken;
+
+        request.setKey(key);
+        request.setUpToken(upToken);
+        return request;
     }
 
     @ResponseStatus(HttpStatus.CREATED)

@@ -57,4 +57,9 @@ public class ChannelCategoryService {
         int rows = channelCategoryMapper.delete(id);
         return rows;
     }
+
+    public List<ChannelCategoryEntity> findAll() {
+        List<ChannelCategoryEntity> channelCategoryList = channelCategoryMapper.findAll();
+        return channelCategoryList;
+    }
 }

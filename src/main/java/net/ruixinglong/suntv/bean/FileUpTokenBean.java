@@ -10,6 +10,10 @@ import javax.validation.constraints.NotNull;
 public class FileUpTokenBean {
 
     @NotNull(message = "request.bad_param")
-    @Length(min = 1, max = 100, message = "file.name.length")
+//    @Length(min = 1, max = 100, message = "file.name.length")
     String name;
+
+    String key;
+
+    String upToken;
 }

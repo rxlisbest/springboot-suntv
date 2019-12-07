@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 @ResponseBody
 @RestController
@@ -73,5 +74,11 @@ public class ChannelCategoryController {
     public Integer delete(@PathVariable int id) {
         Integer rows = channelCategoryService.delete(id);
         return rows;
+    }
+
+    @GetMapping("/all")
+    public List<ChannelCategoryEntity> all() throws Exception {
+        List<ChannelCategoryEntity> list = channelCategoryService.findAll();
+        return list;
     }
 }
