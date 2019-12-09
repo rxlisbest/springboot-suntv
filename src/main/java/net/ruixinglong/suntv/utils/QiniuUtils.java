@@ -17,4 +17,15 @@ public class QiniuUtils {
         String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
         return String.format("%s.%s", uuid, suffix);
     }
+
+    /**
+     * 根据后缀生成文件名
+     * @param ext
+     * @return
+     */
+    public String getKeyByExt(String ext) {
+        UUID uuid = UUID.randomUUID();
+        String suffix = ext;
+        return String.format("%s.%s", uuid, suffix);
+    }
 }

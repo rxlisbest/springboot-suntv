@@ -16,4 +16,10 @@ public class QiniuBean {
     private String bucket;
 
     private String cdnDomain;
+
+    private  String persistentPipeline;
+
+    private String persistentNotifyUrl;
+
+    private QiniuPersistentOpfsBean persistentOpfs;
 }
