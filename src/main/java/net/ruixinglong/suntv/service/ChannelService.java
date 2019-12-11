@@ -18,8 +18,11 @@ public class ChannelService {
     @Autowired
     ChannelMapper channelMapper;
 
-    public PageInfo<ChannelEntity> findAll(int page, int pageSize) {
-        PageHelper.startPage(page, pageSize);
+    public PageInfo<ChannelEntity> findAll(Integer pageNum, int pageSize) {
+        if (pageNum == null) {
+            pageNum = 1;
+        }
+        PageHelper.startPage(pageNum, pageSize);
         List<ChannelEntity> channelList = channelMapper.findAll();
         PageInfo<ChannelEntity> pageInfo = new PageInfo<>(channelList);
         return pageInfo;

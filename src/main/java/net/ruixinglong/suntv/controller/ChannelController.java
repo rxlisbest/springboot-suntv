@@ -29,11 +29,8 @@ public class ChannelController {
     PaginationBean paginationBean;
 
     @GetMapping("/index")
-    public PageInfo<ChannelEntity> index(Integer page) throws Exception {
-        if (page == null) {
-            page = 1;
-        }
-        PageInfo<ChannelEntity> list = channelService.findAll(page, paginationBean.getPageSize());
+    public PageInfo<ChannelEntity> index(Integer pageNum) throws Exception {
+        PageInfo<ChannelEntity> list = channelService.findAll(pageNum, paginationBean.getPageSize());
         return list;
     }
 
@@ -53,6 +50,7 @@ public class ChannelController {
             throw new BadRequestException(LocaleMessageUtils.getMsg(bindingResult.getFieldError().getDefaultMessage()));
         }
         request.setCreate_user_id((Integer) httpServletRequest.getAttribute("user_id"));
+        request.setUrl(request.getUrl() != null ? request.getUrl() : "");
         Integer id = channelService.create(request);
         ChannelEntity channelEntity = channelService.findOne(id);
         return channelEntity;

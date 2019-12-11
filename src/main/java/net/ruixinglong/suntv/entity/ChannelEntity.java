@@ -15,13 +15,13 @@ public class ChannelEntity {
     private int channel_category_id;
 
     @NotNull(message = "channel.name.can_not_null")
-    @Length(min = 1, max = 100, message = "channel.name.length")
+    @Length(min = 1, max = 255, message = "channel.name.length")
     private String name;
 
 //    @Min(value = 1, message = "channel.file_id.can_not_null")
     private int file_id;
 
-    @NotNull(message = "channel.url.can_not_null")
+//    @NotNull(message = "channel.url.can_not_null")
     private String url;
 
     private int create_user_id;
