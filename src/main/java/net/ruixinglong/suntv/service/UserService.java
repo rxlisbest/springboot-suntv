@@ -1,9 +1,13 @@
 package net.ruixinglong.suntv.service;
 
 import net.ruixinglong.suntv.bean.UserRegisterBean;
+import net.ruixinglong.suntv.entity.FamilyEntity;
 import net.ruixinglong.suntv.entity.UserEntity;
+import net.ruixinglong.suntv.entity.UserFamilyEntity;
 import net.ruixinglong.suntv.exception.BadRequestException;
 import net.ruixinglong.suntv.exception.NotFoundException;
+import net.ruixinglong.suntv.mapper.FamilyMapper;
+import net.ruixinglong.suntv.mapper.UserFamilyMapper;
 import net.ruixinglong.suntv.mapper.UserMapper;
 import net.ruixinglong.suntv.utils.LocaleMessageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,12 @@ public class UserService {
 
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    FamilyMapper familyMapper;
+
+    @Autowired
+    UserFamilyMapper userFamilyMapper;
 
     public List<UserEntity> findAll() {
         List<UserEntity> userList = null;
@@ -38,7 +48,7 @@ public class UserService {
             throw new BadRequestException(LocaleMessageUtils.getMsg("user.cellphone_used"));
         }
         Integer countByUsername = userMapper.countByUsername(user.getUsername());
-        if (countByUsername > 0) {
+        if (user.getUsername().length() > 0 && countByUsername > 0) {
             throw new BadRequestException(LocaleMessageUtils.getMsg("user.username_used"));
         }
         int rows = userMapper.create(user);
@@ -52,7 +62,19 @@ public class UserService {
         userEntity.setUsername("");
         String password = DigestUtils.md5DigestAsHex(userRegisterBean.getPassword().getBytes());
         userEntity.setPassword(password);
-        return this.create(userEntity);
+
+        int id = this.create(userEntity);
+
+        FamilyEntity familyEntity = familyMapper.findOfficialOne();
+        if (familyEntity != null) {
+            UserFamilyEntity userFamilyEntity = new UserFamilyEntity();
+            userFamilyEntity.setUser_id(id);
+            userFamilyEntity.setFamily_id(familyEntity.getId());
+            userFamilyEntity.setCreate_user_id(id);
+            userFamilyEntity.setIs_default(1);
+            userFamilyMapper.create(userFamilyEntity);
+        }
+        return id;
     }
 
     @Transactional

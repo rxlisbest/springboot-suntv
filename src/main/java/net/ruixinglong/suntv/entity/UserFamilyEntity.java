@@ -20,4 +20,6 @@ public class UserFamilyEntity {
     private Integer create_time;
 
     private Integer update_time;
+
+    private int is_default;
 }

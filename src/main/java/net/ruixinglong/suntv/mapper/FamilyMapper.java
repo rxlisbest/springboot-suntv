@@ -20,4 +20,6 @@ public interface FamilyMapper {
     int delete(int id);
 
     int updateStatus(Integer id, FamilyUpdateStatusBean familyUpdateStatusBean);
+
+    FamilyEntity findOfficialOne();
 }

@@ -20,4 +20,6 @@ public interface ChannelMapper {
     int delete(int id);
 
     int updateStatus(Integer id, ChannelUpdateStatusBean channelUpdateStatusBean);
+
+    List<ChannelEntity> findAllByFamilyId(int family_id);
 }

@@ -60,4 +60,14 @@ public class ChannelService {
         int rows = channelMapper.delete(id);
         return rows;
     }
+
+    public PageInfo<ChannelEntity> findAllByFamilyId(int familyId, Integer pageNum, int pageSize) {
+        if (pageNum == null) {
+            pageNum = 1;
+        }
+        PageHelper.startPage(pageNum, pageSize);
+        List<ChannelEntity> channelList = channelMapper.findAllByFamilyId(familyId);
+        PageInfo<ChannelEntity> pageInfo = new PageInfo<>(channelList);
+        return pageInfo;
+    }
 }

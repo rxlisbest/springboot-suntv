@@ -17,4 +17,6 @@ public interface UserFamilyMapper {
     int update(int id, UserFamilyEntity userFamily);
 
     int delete(int id);
+
+    UserFamilyEntity findDefaultOne(int user_id);
 }

@@ -47,4 +47,9 @@ public class UserFamilyService {
         int rows = userFamilyMapper.delete(id);
         return rows;
     }
+
+    public UserFamilyEntity findDefaultOne(int user_id) {
+        UserFamilyEntity userFamilyEntity = userFamilyMapper.findDefaultOne(user_id);
+        return userFamilyEntity;
+    }
 }

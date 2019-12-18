@@ -8,6 +8,8 @@
         <result column="create_user_id" jdbcType="INTEGER" property="create_user_id" javaType="int" />
         <result column="create_time" jdbcType="INTEGER" property="create_time" javaType="int" />
         <result column="update_time" jdbcType="INTEGER" property="update_time" javaType="int" />
+        <result column="status" jdbcType="INTEGER" property="status" javaType="int" />
+        <result column="is_official" jdbcType="INTEGER" property="is_official" javaType="int" />
     </resultMap>
 
     <select id="findAll" resultType="net.ruixinglong.suntv.entity.FamilyEntity">
@@ -19,7 +21,7 @@
     </select>
 
     <insert id="create" parameterType="net.ruixinglong.suntv.entity.FamilyEntity" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO `family` (`name`, `create_user_id`, `create_time`, `update_time`) VALUES (#{name}, #{create_user_id}, unix_timestamp(now()), 0)
+        INSERT INTO `family` (`name`, `create_user_id`, `create_time`, `update_time`, `is_official`) VALUES (#{name}, #{create_user_id}, unix_timestamp(now()), 0, #{is_official})
     </insert>
 
     <update id="update" parameterType="net.ruixinglong.suntv.entity.FamilyEntity">
@@ -33,4 +35,8 @@
     <update id="updateStatus" parameterType="net.ruixinglong.suntv.bean.FamilyUpdateStatusBean">
         UPDATE `family` SET `status` = #{familyUpdateStatusBean.status}, `update_time` = unix_timestamp(now()) WHERE id = #{id}
     </update>
+
+    <select id="findOfficialOne" resultType="net.ruixinglong.suntv.entity.FamilyEntity">
+        SELECT * FROM `family` WHERE is_official = 1
+    </select>
 </mapper>

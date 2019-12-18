@@ -57,4 +57,9 @@ public class FamilyService {
         int rows = familyMapper.delete(id);
         return rows;
     }
+
+    public FamilyEntity findOfficialOne() {
+        FamilyEntity familyEntity = familyMapper.findOfficialOne();
+        return familyEntity;
+    }
 }

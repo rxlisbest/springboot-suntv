@@ -29,4 +29,8 @@ public class ChannelEntity {
     private Integer create_time;
 
     private Integer update_time;
+
+    private ChannelCategoryEntity channel_category;
+
+    private FileEntity file;
 }

@@ -51,7 +51,9 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
             Map<String, Claim> claims = jwt.getClaims();    //Key is the Claim name
             int userId = claims.get("id").asInt();
+            int familyId = claims.get("family_id").asInt();
             httpServletRequest.setAttribute("user_id", userId);
+            httpServletRequest.setAttribute("family_id", familyId);
         } catch (JWTVerificationException exception){
             throw new UnauthorizedException(exception.getMessage());
         }

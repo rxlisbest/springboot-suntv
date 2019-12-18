@@ -80,4 +80,11 @@ public class ChannelController {
         Integer rows = channelService.delete(id);
         return rows;
     }
+
+    @GetMapping("/family-index")
+    public PageInfo<ChannelEntity> index(Integer pageNum, HttpServletRequest httpServletRequest) throws Exception {
+        int familyId = (Integer) httpServletRequest.getAttribute("family_id");
+        PageInfo<ChannelEntity> list = channelService.findAllByFamilyId(familyId, pageNum, paginationBean.getPageSize());
+        return list;
+    }
 }

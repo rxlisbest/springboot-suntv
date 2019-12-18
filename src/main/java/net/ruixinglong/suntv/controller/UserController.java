@@ -8,7 +8,9 @@ import net.ruixinglong.suntv.bean.UserLoginBean;
 import net.ruixinglong.suntv.bean.UserPasswordLoginBean;
 import net.ruixinglong.suntv.bean.UserRegisterBean;
 import net.ruixinglong.suntv.entity.UserEntity;
+import net.ruixinglong.suntv.entity.UserFamilyEntity;
 import net.ruixinglong.suntv.exception.BadRequestException;
+import net.ruixinglong.suntv.service.UserFamilyService;
 import net.ruixinglong.suntv.service.UserService;
 import net.ruixinglong.suntv.utils.LocaleMessageUtils;
 import net.ruixinglong.suntv.utils.RedisUtils;
@@ -31,6 +33,9 @@ public class UserController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private UserFamilyService userFamilyService;
 
     @Autowired
     RedisUtils redisUtils;
@@ -56,10 +61,13 @@ public class UserController {
             throw new BadRequestException(LocaleMessageUtils.getMsg("user.code.bad_value"));
         }
 
+        UserFamilyEntity userFamilyEntity = userFamilyService.findDefaultOne(userEntity.getId());
+
         Algorithm algorithm = Algorithm.HMAC256(authorizationBean.getSecret());
         String token = JWT.create()
                 .withClaim("id", userEntity.getId())
                 .withClaim("name", userEntity.getName())
+                .withClaim("family_id", userFamilyEntity.getFamily_id())
                 .withClaim("cellphone", userEntity.getCellphone())
                 .sign(algorithm);
         request.setToken(token);
@@ -83,6 +91,7 @@ public class UserController {
             throw new BadRequestException(LocaleMessageUtils.getMsg("user.code.bad_value"));
         }
         Integer id = userService.register(request);
+
         UserEntity userEntity = userService.findOne(id);
         return userEntity;
     }
@@ -123,10 +132,13 @@ public class UserController {
             throw new BadRequestException(LocaleMessageUtils.getMsg("user.password.bad_value"));
         }
 
+        UserFamilyEntity userFamilyEntity = userFamilyService.findDefaultOne(userEntity.getId());
+
         Algorithm algorithm = Algorithm.HMAC256(authorizationBean.getSecret());
         String token = JWT.create()
                 .withClaim("id", userEntity.getId())
                 .withClaim("name", userEntity.getName())
+                .withClaim("family_id", userFamilyEntity.getFamily_id())
                 .withClaim("cellphone", userEntity.getCellphone())
                 .sign(algorithm);
         request.setToken(token);

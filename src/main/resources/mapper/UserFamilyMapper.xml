@@ -9,6 +9,7 @@
         <result column="create_user_id" jdbcType="INTEGER" property="create_user_id" javaType="int" />
         <result column="create_time" jdbcType="INTEGER" property="create_time" javaType="int" />
         <result column="update_time" jdbcType="INTEGER" property="update_time" javaType="int" />
+        <result column="is_default" jdbcType="INTEGER" property="is_default" javaType="int" />
     </resultMap>
 
     <select id="findAll" resultType="net.ruixinglong.suntv.entity.UserFamilyEntity">
@@ -20,14 +21,18 @@
     </select>
 
     <insert id="create" parameterType="net.ruixinglong.suntv.entity.UserFamilyEntity" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO `user_family` (`user_id`, `family_id`, `create_user_id`, `create_time`, `update_time`) VALUES (#{user_id}, #{family_id}, #{create_user_id}, unix_timestamp(now()), 0)
+        INSERT INTO `user_family` (`user_id`, `family_id`, `create_user_id`, `create_time`, `update_time`, `is_default`) VALUES (#{user_id}, #{family_id}, #{create_user_id}, unix_timestamp(now()), 0, #{is_default})
     </insert>
 
     <update id="update" parameterType="net.ruixinglong.suntv.entity.UserFamilyEntity">
-        UPDATE `user_family` SET `user_id` = #{userFamily.user_id}, `family_id` = #{userFamily.family_id}, `update_time` = unix_timestamp(now()) WHERE id = #{id}
+        UPDATE `user_family` SET `user_id` = #{userFamily.user_id}, `family_id` = #{userFamily.family_id}, `update_time` = unix_timestamp(now()), `is_default` = #{userFamily.is_default} WHERE id = #{id}
     </update>
 
     <delete id="delete" parameterType="net.ruixinglong.suntv.entity.UserFamilyEntity">
         DELETE FROM `user_family` WHERE id = #{id}
     </delete>
+
+    <select id="findDefaultOne" resultType="net.ruixinglong.suntv.entity.UserFamilyEntity">
+        SELECT * FROM `user_family` WHERE user_id = #{user_id}
+    </select>
 </mapper>

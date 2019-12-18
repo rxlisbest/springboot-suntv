@@ -21,4 +21,6 @@ public class FamilyEntity {
     private Integer update_time;
 
     private int status;
+
+    private int is_official;
 }
