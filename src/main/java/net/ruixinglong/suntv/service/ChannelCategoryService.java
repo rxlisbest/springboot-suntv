@@ -62,4 +62,9 @@ public class ChannelCategoryService {
         List<ChannelCategoryEntity> channelCategoryList = channelCategoryMapper.findAll();
         return channelCategoryList;
     }
+
+    public List<ChannelCategoryEntity> findAllByFamilyId(int familyId) {
+        List<ChannelCategoryEntity> channelCategoryList = channelCategoryMapper.findAllByFamilyId(familyId);
+        return channelCategoryList;
+    }
 }

@@ -81,4 +81,11 @@ public class ChannelCategoryController {
         List<ChannelCategoryEntity> list = channelCategoryService.findAll();
         return list;
     }
+
+    @GetMapping("/family-all")
+    public List<ChannelCategoryEntity> familyAll(HttpServletRequest httpServletRequest) throws Exception {
+        int familyId = (Integer) httpServletRequest.getAttribute("family_id");
+        List<ChannelCategoryEntity> list = channelCategoryService.findAllByFamilyId(familyId);
+        return list;
+    }
 }

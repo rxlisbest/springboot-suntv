@@ -51,6 +51,7 @@ public class ChannelController {
         }
         request.setCreate_user_id((Integer) httpServletRequest.getAttribute("user_id"));
         request.setUrl(request.getUrl() != null ? request.getUrl() : "");
+        request.setFamily_id((Integer) httpServletRequest.getAttribute("family_id"));
         Integer id = channelService.create(request);
         ChannelEntity channelEntity = channelService.findOne(id);
         return channelEntity;

@@ -30,6 +30,8 @@ public class ChannelEntity {
 
     private Integer update_time;
 
+    private int family_id;
+
     private ChannelCategoryEntity channel_category;
 
     private FileEntity file;

@@ -12,7 +12,7 @@
     </resultMap>
 
     <select id="findAll" resultType="net.ruixinglong.suntv.entity.ChannelCategoryEntity">
-        SELECT * FROM `channel_category`
+        SELECT * FROM `channel_category` ORDER BY `id` DESC
     </select>
 
     <select id="findOne" resultType="net.ruixinglong.suntv.entity.ChannelCategoryEntity">
@@ -34,4 +34,8 @@
     <update id="updateStatus" parameterType="net.ruixinglong.suntv.bean.ChannelCategoryUpdateStatusBean">
         UPDATE `channel_category` SET `status` = #{channel_categoryUpdateStatusBean.status}, `update_time` = unix_timestamp(now()) WHERE id = #{id}
     </update>
+
+    <select id="findAllByFamilyId" resultType="net.ruixinglong.suntv.entity.ChannelCategoryEntity">
+        SELECT * FROM `channel_category` WHERE `family_id` = #{family_id} ORDER BY `id` DESC
+    </select>
 </mapper>
