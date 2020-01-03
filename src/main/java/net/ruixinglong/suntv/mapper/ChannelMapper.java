@@ -22,4 +22,6 @@ public interface ChannelMapper {
     int updateStatus(Integer id, ChannelUpdateStatusBean channelUpdateStatusBean);
 
     List<ChannelEntity> findAllByFamilyId(int family_id);
+
+    List<ChannelEntity> findAllByChannelCategoryId(int channel_category_id);
 }

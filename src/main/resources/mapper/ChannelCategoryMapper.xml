@@ -20,11 +20,11 @@
     </select>
 
     <insert id="create" parameterType="net.ruixinglong.suntv.entity.ChannelCategoryEntity" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO `channel_category` (`name`, `create_user_id`, `create_time`, `update_time`) VALUES (#{name}, #{create_user_id}, unix_timestamp(now()), 0)
+        INSERT INTO `channel_category` (`name`, `create_user_id`, `create_time`, `update_time`, `family_id`) VALUES (#{name}, #{create_user_id}, unix_timestamp(now()), 0, #{family_id})
     </insert>
 
     <update id="update" parameterType="net.ruixinglong.suntv.entity.ChannelCategoryEntity">
-        UPDATE `channel_category` SET `name` = #{channel_category.name}, `update_time` = unix_timestamp(now()) WHERE id = #{id}
+        UPDATE `channel_category` SET `name` = #{channelCategory.name}, `update_time` = unix_timestamp(now()) WHERE id = #{id}
     </update>
 
     <delete id="delete" parameterType="net.ruixinglong.suntv.entity.ChannelCategoryEntity">

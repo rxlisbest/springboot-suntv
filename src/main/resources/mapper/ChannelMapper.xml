@@ -46,4 +46,8 @@
     <select id="findAllByFamilyId" resultType="net.ruixinglong.suntv.entity.ChannelEntity" resultMap="BaseResultMap">
         SELECT * FROM `channel` WHERE `family_id` = #{family_id} ORDER BY `id` DESC
     </select>
+
+    <select id="findAllByChannelCategoryId" resultType="net.ruixinglong.suntv.entity.ChannelEntity" resultMap="BaseResultMap">
+        SELECT * FROM `channel` WHERE `channel_category_id` = #{channel_category_id} ORDER BY `id` DESC
+    </select>
 </mapper>

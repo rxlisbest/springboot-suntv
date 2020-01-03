@@ -3,6 +3,7 @@ package net.ruixinglong.suntv.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import net.ruixinglong.suntv.bean.ChannelCategoryUpdateStatusBean;
+import net.ruixinglong.suntv.bean.PaginationBean;
 import net.ruixinglong.suntv.entity.ChannelCategoryEntity;
 import net.ruixinglong.suntv.exception.NotFoundException;
 import net.ruixinglong.suntv.mapper.ChannelCategoryMapper;
@@ -17,6 +18,9 @@ public class ChannelCategoryService {
 
     @Autowired
     ChannelCategoryMapper channelCategoryMapper;
+
+    @Autowired
+    PaginationBean paginationBean;
 
     public PageInfo<ChannelCategoryEntity> findAll(int page, int pageSize) {
         PageHelper.startPage(page, pageSize);
@@ -66,5 +70,18 @@ public class ChannelCategoryService {
     public List<ChannelCategoryEntity> findAllByFamilyId(int familyId) {
         List<ChannelCategoryEntity> channelCategoryList = channelCategoryMapper.findAllByFamilyId(familyId);
         return channelCategoryList;
+    }
+
+    public PageInfo<ChannelCategoryEntity> findAllByFamilyId(int familyId, Integer pageNum, Integer pageSize) {
+        if (pageNum == null) {
+            pageNum = 1;
+        }
+        if (pageSize == null) {
+            pageSize = paginationBean.getPageSize();
+        }
+        PageHelper.startPage(pageNum, pageSize);
+        List<ChannelCategoryEntity> channelCategoryList = channelCategoryMapper.findAllByFamilyId(familyId);
+        PageInfo<ChannelCategoryEntity> pageInfo = new PageInfo<>(channelCategoryList);
+        return pageInfo;
     }
 }

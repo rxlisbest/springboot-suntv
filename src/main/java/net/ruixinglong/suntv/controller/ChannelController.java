@@ -29,8 +29,8 @@ public class ChannelController {
     PaginationBean paginationBean;
 
     @GetMapping("/index")
-    public PageInfo<ChannelEntity> index(Integer pageNum) throws Exception {
-        PageInfo<ChannelEntity> list = channelService.findAll(pageNum, paginationBean.getPageSize());
+    public PageInfo<ChannelEntity> index(Integer pageNum, Integer pageSize) throws Exception {
+        PageInfo<ChannelEntity> list = channelService.findAll(pageNum, pageSize);
         return list;
     }
 
@@ -62,6 +62,7 @@ public class ChannelController {
         if (bindingResult.hasErrors()) {
             throw new BadRequestException(LocaleMessageUtils.getMsg(bindingResult.getFieldError().getDefaultMessage()));
         }
+        request.setUrl(request.getUrl() != null ? request.getUrl() : "");
         Integer rows = channelService.update(id, request);
         return rows;
     }
@@ -83,9 +84,9 @@ public class ChannelController {
     }
 
     @GetMapping("/family-index")
-    public PageInfo<ChannelEntity> index(Integer pageNum, HttpServletRequest httpServletRequest) throws Exception {
+    public PageInfo<ChannelEntity> index(Integer pageNum, Integer pageSize, HttpServletRequest httpServletRequest) throws Exception {
         int familyId = (Integer) httpServletRequest.getAttribute("family_id");
-        PageInfo<ChannelEntity> list = channelService.findAllByFamilyId(familyId, pageNum, paginationBean.getPageSize());
+        PageInfo<ChannelEntity> list = channelService.findAllByFamilyId(familyId, pageNum, pageSize);
         return list;
     }
 }
