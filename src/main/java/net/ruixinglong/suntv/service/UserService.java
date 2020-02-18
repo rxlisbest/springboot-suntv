@@ -64,12 +64,15 @@ public class UserService {
         userEntity.setPassword(password);
 
         int id = this.create(userEntity);
-
         FamilyEntity familyEntity = familyMapper.findOfficialOne();
+
         if (familyEntity != null) {
+            familyEntity.setName(userEntity.getName() + LocaleMessageUtils.getMsg("family.default"));
+            int familyId = familyMapper.create(familyEntity);
+
             UserFamilyEntity userFamilyEntity = new UserFamilyEntity();
             userFamilyEntity.setUser_id(id);
-            userFamilyEntity.setFamily_id(familyEntity.getId());
+            userFamilyEntity.setFamily_id(familyId);
             userFamilyEntity.setCreate_user_id(id);
             userFamilyEntity.setIs_default(1);
             userFamilyMapper.create(userFamilyEntity);
